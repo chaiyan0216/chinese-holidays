@@ -3,7 +3,7 @@ name: Update ics
 on:
   push:
   schedule:
-    - cron: '16 16 * 10-12 *'
+    - cron: '32 16 * * *'
 
 jobs:
   update-ics:
@@ -23,6 +23,12 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
 
       - name: Exec with Maven
         run: mvn compile exec:java
