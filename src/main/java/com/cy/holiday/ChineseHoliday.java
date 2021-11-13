@@ -37,5 +37,7 @@ public class ChineseHoliday {
 
         // Generate ics file.
         CalenderUtil.generateCalender(events);
+
+        System.exit(0);
     }
 }

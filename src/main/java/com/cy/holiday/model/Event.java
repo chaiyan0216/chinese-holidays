@@ -12,7 +12,7 @@ public class Event {
     public Event(LocalDate date, String summary) {
         this.date = date;
         this.summary = summary;
-        this.uid = date + "_" + UUID.randomUUID();
+        this.uid = date + "_" + summary.replace(" ", "");
     }
 
     public LocalDate getDate() {

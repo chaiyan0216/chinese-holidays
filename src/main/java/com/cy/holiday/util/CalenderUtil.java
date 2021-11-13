@@ -4,6 +4,7 @@ import com.cy.holiday.model.Event;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Date;
+import net.fortuna.ical4j.model.DateTime;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.*;
 
@@ -31,6 +32,8 @@ public class CalenderUtil {
             java.util.Date date = Date.from(event.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
             VEvent vEvent = new VEvent(new Date(date), new Date(date), event.getSummary());
             vEvent.getProperties().add(new Uid(event.getUid()));
+            vEvent.getProperties().remove(new DtStamp());
+            vEvent.getProperties().add(new DtStamp(new DateTime(date)));
             calendar.getComponents().add(vEvent);
         }
 
