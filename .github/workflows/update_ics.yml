@@ -1,8 +1,9 @@
 name: Update ics
 
 on:
+  push:
   schedule:
-    - cron:  '56 15 * 10-12 *'
+    - cron: '11 16 * 10-12 *'
 
 jobs:
   update-ics:
