@@ -3,13 +3,15 @@ name: Update ics
 on:
   push:
   schedule:
-    - cron: '11 16 * 10-12 *'
+    - cron: '16 16 * 10-12 *'
 
 jobs:
   update-ics:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Set Timezone
         uses: szenius/set-timezone@v1.0
