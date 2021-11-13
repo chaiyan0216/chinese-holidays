@@ -2,7 +2,7 @@ name: Update ics
 
 on:
   schedule:
-    - cron:  '49 23 * 10-12 *'
+    - cron:  '56 15 * 10-12 *'
 
 jobs:
   update-ics:
