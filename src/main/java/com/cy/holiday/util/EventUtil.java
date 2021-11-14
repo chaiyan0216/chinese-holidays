@@ -22,15 +22,19 @@ public class EventUtil {
      * @param holidayContent one line holiday content.
      * @return all holiday events.
      */
-    public static List<Event> getEvents(List<String> holidayContent) {
+    public static List<Event> getEvents(List<String> holidayContent, String link) {
         List<Event> events = new ArrayList<>();
 
         String name = holidayContent.get(0);
+        StringBuilder description = new StringBuilder(String.join("，", holidayContent.subList(0, 3)));
+        description.append(holidayContent.size() >= 4 ? "\n" + holidayContent.get(3) : "");
+        description.append("\n\n").append(link);
+
         // Add all holiday events.
-        addEvents(events, HOLIDAY_TEMPLATE, name, holidayContent.get(1), String.join(" ", holidayContent));
+        addEvents(events, HOLIDAY_TEMPLATE, name, holidayContent.get(1), description.toString());
         // Add all workday events.
         if (holidayContent.size() >= 4) {
-            addEvents(events, WORKDAY_TEMPLATE, name, holidayContent.get(3), String.join(" ", holidayContent));
+            addEvents(events, WORKDAY_TEMPLATE, name, holidayContent.get(3), description.toString());
         }
 
         return events;

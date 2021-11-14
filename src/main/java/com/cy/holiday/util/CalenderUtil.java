@@ -44,7 +44,7 @@ public class CalenderUtil {
 
         try {
             FileOutputStream fos = new FileOutputStream(PropertyUtil.get("ics.path"));
-            CalendarOutputter calendarOutputter = new CalendarOutputter();
+            CalendarOutputter calendarOutputter = new CalendarOutputter(false);
             calendarOutputter.output(calendar, fos);
         } catch (IOException e) {
             e.printStackTrace();

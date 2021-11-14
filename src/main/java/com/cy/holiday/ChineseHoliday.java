@@ -31,7 +31,7 @@ public class ChineseHoliday {
             // Get holiday details from each holiday content.
             for (List<String> content : contents) {
                 System.out.println(content);
-                events.addAll(EventUtil.getEvents(content));
+                events.addAll(EventUtil.getEvents(content, link));
             }
         }
 
