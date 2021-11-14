@@ -2,10 +2,9 @@ package com.cy.holiday.util;
 
 import com.cy.holiday.model.Event;
 import net.fortuna.ical4j.data.CalendarOutputter;
-import net.fortuna.ical4j.model.Calendar;
-import net.fortuna.ical4j.model.Date;
-import net.fortuna.ical4j.model.DateTime;
+import net.fortuna.ical4j.model.*;
 import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.component.VTimeZone;
 import net.fortuna.ical4j.model.property.*;
 
 import java.io.FileOutputStream;
@@ -27,6 +26,11 @@ public class CalenderUtil {
         calendar.getProperties().add(new XProperty("X-WR-CALNAME", PropertyUtil.get("ical.calname")));
         calendar.getProperties().add(new XProperty("X-WR-CALDESC", PropertyUtil.get("ical.caldesc")));
         calendar.getProperties().add(new XProperty("X-WR-TIMEZONE", PropertyUtil.get("ical.timezone")));
+
+        TimeZoneRegistry registry = TimeZoneRegistryFactory.getInstance().createRegistry();
+        TimeZone timeZone = registry.getTimeZone(PropertyUtil.get("ical.timezone"));
+        VTimeZone tz = timeZone.getVTimeZone();
+        calendar.getComponents().add(tz);
 
         for (Event event : events) {
             java.util.Date date = Date.from(event.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
