@@ -9,7 +9,7 @@ import com.cy.holiday.util.CalenderUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChineseHoliday {
+public class ChineseHolidays {
 
     public static void main(String[] args) {
         // Get config properties

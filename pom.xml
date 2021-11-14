@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cy</groupId>
-    <artifactId>chinese-holiday</artifactId>
+    <artifactId>chinese-holidays</artifactId>
     <version>1.0.0</version>
-    <name>chinese-holiday</name>
+    <name>chinese-holidays</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -45,7 +45,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
-                    <mainClass>com.cy.holiday.ChineseHoliday</mainClass>
+                    <mainClass>com.cy.holiday.ChineseHolidays</mainClass>
                 </configuration>
             </plugin>
         </plugins>
