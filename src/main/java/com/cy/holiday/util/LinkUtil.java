@@ -1,10 +1,9 @@
 package com.cy.holiday.util;
 
+import org.jsoup.Jsoup;
+import org.jsoup.select.Elements;
+
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -17,45 +16,49 @@ public class LinkUtil {
     }
 
     /**
-     * Get specific contents from an url.
+     * Get specific links from an url.
      *
-     * @param url   the link need to visit.
+     * @param url   the url need to visit.
      * @param reg   the specific pattern.
-     * @param count the specific content count.
-     * @return specific content list.
+     * @param count the limit count.
+     * @return links list.
      */
-    public static List<List<String>> getContents(String url, String reg, int count) {
-        String response = getResponse(url);
-
-        return response.lines()
-                .map(s -> getGroups(s, reg))
-                .filter(ss -> !ss.isEmpty())
-                .limit(count > 0 ? count : Integer.MAX_VALUE)
-                .collect(Collectors.toList());
-    }
-
-    public static List<List<String>> getContents(List<String> url, String reg) {
-        return getContents(String.join("", url), reg, 0);
-    }
-
-    /**
-     * Get html content from url.
-     *
-     * @param url the link need to visit.
-     * @return the html content.
-     */
-    private static String getResponse(String url) {
-        HttpClient client = HttpClient.newBuilder().build();
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(url)).build();
-        HttpResponse<String> response = null;
+    public static List<String> getLinks(String url, String reg, int count) {
+        Pattern pattern = Pattern.compile(reg);
 
         try {
-            response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException | InterruptedException e) {
+            Elements links = Jsoup.connect(url).get().select("a[href]");
+            return links.stream()
+                    .map(l -> l.attr("abs:href"))
+                    .filter(l -> pattern.matcher(l).matches())
+                    .limit(count)
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return response == null ? "" : response.body();
+        return new ArrayList<>();
+    }
+
+    /**
+     * Get specific contents from an url.
+     *
+     * @param url the link need to visit.
+     * @param reg the specific pattern.
+     * @return specific content list.
+     */
+    public static List<List<String>> getContents(String url, String reg) {
+        try {
+            String text = Jsoup.connect(url).get().wholeText();
+            return text.lines()
+                    .map(l -> getGroups(l, reg))
+                    .filter(ss -> !ss.isEmpty())
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>();
     }
 
     /**
@@ -73,7 +76,9 @@ public class LinkUtil {
 
         if (matcher.find()) {
             for (int i = 1; i <= matcher.groupCount(); i++) {
-                list.add(matcher.group(i));
+                if (!matcher.group(i).isEmpty()) {
+                    list.add(matcher.group(i));
+                }
             }
         }
 

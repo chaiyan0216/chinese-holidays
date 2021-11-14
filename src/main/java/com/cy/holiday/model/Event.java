@@ -1,17 +1,18 @@
 package com.cy.holiday.model;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 public class Event {
 
     private final LocalDate date;
     private final String summary;
+    private final String description;
     private final String uid;
 
-    public Event(LocalDate date, String summary) {
+    public Event(LocalDate date, String summary, String description) {
         this.date = date;
         this.summary = summary;
+        this.description = description;
         this.uid = date + "_" + summary.replace(" ", "");
     }
 
@@ -21,6 +22,10 @@ public class Event {
 
     public String getSummary() {
         return summary;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public String getUid() {

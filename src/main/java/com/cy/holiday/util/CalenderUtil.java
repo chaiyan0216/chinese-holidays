@@ -38,6 +38,7 @@ public class CalenderUtil {
             vEvent.getProperties().add(new Uid(event.getUid()));
             vEvent.getProperties().remove(new DtStamp());
             vEvent.getProperties().add(new DtStamp(new DateTime(date)));
+            vEvent.getProperties().add(new Description(event.getDescription()));
             calendar.getComponents().add(vEvent);
         }
 

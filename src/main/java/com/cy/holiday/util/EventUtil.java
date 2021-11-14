@@ -27,9 +27,11 @@ public class EventUtil {
 
         String name = holidayContent.get(0);
         // Add all holiday events.
-        addEvents(events, HOLIDAY_TEMPLATE, name, holidayContent.get(1));
+        addEvents(events, HOLIDAY_TEMPLATE, name, holidayContent.get(1), String.join(" ", holidayContent));
         // Add all workday events.
-        addEvents(events, WORKDAY_TEMPLATE, name, holidayContent.get(3));
+        if (holidayContent.size() >= 4) {
+            addEvents(events, WORKDAY_TEMPLATE, name, holidayContent.get(3), String.join(" ", holidayContent));
+        }
 
         return events;
     }
@@ -41,13 +43,13 @@ public class EventUtil {
      * @param content the holiday content.
      * @param name    the event name.
      */
-    private static void addEvents(List<Event> events, String summaryTemplate, String name, String content) {
+    private static void addEvents(List<Event> events, String summaryTemplate, String name, String content, String description) {
         List<LocalDate> dates = getDates(content);
 
         int cnt = 0;
         for (LocalDate date : dates) {
             cnt++;
-            events.add(new Event(date, String.format(summaryTemplate, name, cnt, dates.size())));
+            events.add(new Event(date, String.format(summaryTemplate, name, cnt, dates.size()), description));
         }
     }
 

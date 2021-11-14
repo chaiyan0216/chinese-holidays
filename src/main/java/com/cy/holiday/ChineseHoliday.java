@@ -21,10 +21,10 @@ public class ChineseHoliday {
         List<Event> events = new ArrayList<>();
 
         // Get holiday announcement links from search link.
-        List<List<String>> links = LinkUtil.getContents(searchLink, searchReg, searchCount);
+        List<String> links = LinkUtil.getLinks(searchLink, searchReg, searchCount);
 
         // Get holiday contents from each holiday announcement link.
-        for (List<String> link : links) {
+        for (String link : links) {
             System.out.println(link);
             List<List<String>> contents = LinkUtil.getContents(link, holidayReg);
 
