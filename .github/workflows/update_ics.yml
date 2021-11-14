@@ -10,8 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
       - name: Set Timezone
         uses: szenius/set-timezone@v1.0
@@ -33,12 +31,13 @@ jobs:
       - name: Exec with Maven
         run: mvn compile exec:java
 
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v11.5
+      - name: Check ics update
+        uses: technote-space/get-diff-action@v5
+        with:
+          FILES: 'chinese_holidays.ics'
 
       - name: Commit if ics updated
-        if: contains(steps.changed-files.outputs.modified_files, 'chinese_holidays.ics')
+        if: env.GIT_DIFF
         uses: EndBug/add-and-commit@v7
         with:
           add: 'chinese_holidays.ics'
