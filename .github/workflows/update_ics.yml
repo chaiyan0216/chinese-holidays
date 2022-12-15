@@ -32,7 +32,7 @@ jobs:
         run: mvn compile exec:java
 
       - name: Check ics update
-        uses: technote-space/get-diff-action@v5
+        uses: technote-space/get-diff-action@v6
         with:
           FILES: 'chinese_holidays.ics'
 
